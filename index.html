@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
+    <title>Unity Web Player | Fps shooters</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+      }
+      #unity-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #unity-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="unity-container">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+    </div>
+    <script>
+      var canvas = document.querySelector("#unity-canvas");
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/fps for unblocked games.loader.js";
+      var config = {
+        arguments: [],
+        dataUrl: buildUrl + "/fps for unblocked games.data",
+        frameworkUrl: buildUrl + "/fps for unblocked games.framework.js",
+        codeUrl: buildUrl + "/fps for unblocked games.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "ZH games",
+        productName: "Fps shooters",
+        productVersion: "5.0.8",
+        // Hide Unity's banners/warnings; errors are only logged to the console.
+        showBanner: function (msg, type) {
+          if (type == 'error') console.error(msg);
+        },
+      };
+
+      // Lower resolution on mobile for performance (optional)
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // config.devicePixelRatio = 1;
+      }
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config).catch((message) => {
+          console.error(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>
